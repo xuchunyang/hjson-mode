@@ -3,6 +3,7 @@
 ;; Copyright (C) 2016  Chunyang Xu
 
 ;; Author: Chunyang Xu <xuchunyang.me@gmail.com>
+;; Package-Requires: ((emacs "24.3"))
 ;; Keywords: json
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -36,13 +37,25 @@
     ;; String
     (modify-syntax-entry ?\' "\"" table)
     (modify-syntax-entry ?\" "\"" table)
+    ;; TODO String in'''...''' ?
     table)
   "Syntax table used in `hjson-mode'.")
+
+(defun hjson-indent-line ()
+  "Indent current line as hjson code."
+  (interactive)
+  (beginning-of-line)
+  (if (bobp)
+      (indent-line-to 0)
+    ;; TODO: This looks very difficult
+    ))
 
 ;;;###autoload
 (define-derived-mode hjson-mode prog-mode "Hjson"
   "Major mode for editing Hjson code."
-  (set (make-local-variable 'comment-start) "# "))
+  (setq-local comment-start "# ")
+  (setq-local comment-start-skip "#+\\s-*")
+  (setq-local indent-line-function 'hjson-indent-line))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.hjson\\'" . hjson-mode) t)
