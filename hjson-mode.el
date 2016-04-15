@@ -28,12 +28,14 @@
 
 (defvar hjson-mode-syntax-table
   (let ((table (make-syntax-table)))
-    ;; Line comments
+    ;; Comments
     (modify-syntax-entry ?# "<" table)
     (modify-syntax-entry ?\n ">" table)
-    ;; // and /* */ comments
-    (modify-syntax-entry ?/ ". 12a14b" table)
+    (modify-syntax-entry ?/ ". 124" table)
     (modify-syntax-entry ?* ". 23b" table)
+    ;; String
+    (modify-syntax-entry ?\' "\"" table)
+    (modify-syntax-entry ?\" "\"" table)
     table)
   "Syntax table used in `hjson-mode'.")
 
